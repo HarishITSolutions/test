@@ -40,6 +40,18 @@ stages:
         inputs:
           command: init
           backendType: azurerm
+           backendServiceArm: 'terraform-basic-testing-azure-connection'
+           backendAzureRmSubscriptionId: '37ed9c9a-0d39-4823-a06c-e8121b935f89'
+           ensureBackend: true
+           backendAzureRmResourceGroupName: 'Testresourcegroup1'
+           backendAzureRmResourceGroupLocation: 'centralus'
+           backendAzureRmStorageAccountName: 'my-backend-storage-account'
+           # azure storage account sku, used when creating the storage account
+           backendAzureRmStorageAccountSku: 'Standard_RAGRS'
+           # azure blob container to store the state file
+           backendAzureRmContainerName: 'my-backend-blob-container'
+           # azure blob file name
+           backendAzureRmKey: infrax.tfstate
           workingDirectory: $(terraformWorkingDirectory)
       # Step 4: run Terraform validate to validate HCL syntax
       - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
