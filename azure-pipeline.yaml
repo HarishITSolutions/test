@@ -44,12 +44,12 @@ stages:
           backendAzureRmSubscriptionId: '37ed9c9a-0d39-4823-a06c-e8121b935f89'
           ensureBackend: true
           backendAzureRmResourceGroupName: 'Testresourcegroup1'
-          backendAzureRmResourceGroupLocation: 'centralus'
-          backendAzureRmStorageAccountName: 'my-backend-storage-account'
+          backendAzureRmResourceGroupLocation: 'eastus'
+          backendAzureRmStorageAccountName: 'gevernovateststor01'
           # azure storage account sku, used when creating the storage account
-          backendAzureRmStorageAccountSku: 'Standard_RAGRS'
+          backendAzureRmStorageAccountSku: 'Standard_LRS'
           # azure blob container to store the state file
-          backendAzureRmContainerName: 'my-backend-blob-container'
+          backendAzureRmContainerName: 'tfstate'
           # azure blob file name
           backendAzureRmKey: infrax.tfstate
           workingDirectory: $(terraformWorkingDirectory)
