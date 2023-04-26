@@ -32,8 +32,8 @@ stages:
       # Step 2: install Terraform on the Azure Pipelines agent
       - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
         displayName: 'Install Terraform'
-        inputs:
-        #  terraformVersion: $(terraformVersion)
+       # inputs:
+       #   terraformVersion: $(terraformVersion)
       # Step 3: run Terraform init to initialize the workspace
       - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
         displayName: 'Run terraform init'
