@@ -39,6 +39,7 @@ stages:
         displayName: 'Run terraform init'
         inputs:
           command: init
+          backendType: azurerm
           workingDirectory: $(terraformWorkingDirectory)
       # Step 4: run Terraform validate to validate HCL syntax
       - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
