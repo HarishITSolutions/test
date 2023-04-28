@@ -74,4 +74,4 @@ stages:
           command: apply
           workingDirectory: $(terraformWorkingDirectory)
           environmentServiceName: $(serviceConnection)
-          commandOptions: -var location=$(azureLocation)
+          #commandOptions: -var location=$(azureLocation)
