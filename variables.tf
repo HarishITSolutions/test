@@ -88,12 +88,6 @@ variable "subscription_id" {
   description = "(Optional) The ID of the subscription Group where the Policy Assignment should be created. Subscription id should be in /subscriptions/subscription_id format."
 }
 
-variable "assignment_location" {
-  type        = string
-  default     = "eastus"
-  description = "(Required) The Azure location where this policy assignment should exist."
-}
-
 variable "assignment_description" {
   type        = string
   default     = "eastus"
