@@ -1,6 +1,7 @@
 variable "policy_name" {
   type        = string
   description = "(Required) The name of the policy definition"
+  default     = "testdevopspolicy"
 }
 
 variable "policy_type" {
@@ -12,11 +13,13 @@ variable "policy_type" {
 variable "policy_manner" {
   type        = string
   description = "(Required) Simple policy or set of policy i.e., initiative. Values can be Policy or initiative"
+  default     = "policy"
 }
 
 variable "policy_display_name" {
   type        = string
   description = "(Required) The display name of the policy definition."
+  default     = "testdevopspolicy"
 }
 
 variable "mode" {
@@ -52,16 +55,18 @@ variable "metadata" {
 variable "policy_def_scope_type" {
   type        = string
   description = "(Required) The scope on which policy should be assigned . Possible values are resource-group, resource, management-group, subscription."
+  default     = "resource-group"
 }
 
 variable "policy_assignment_name" {
   type        = string
   description = "(Required) The name which should be used for this Policy Assignment"
+  default     = "assignment"
 }
 
 variable "resource_group_id" {
   type        = string
-  default     = null
+  default     = “/subscriptions/37ed9c9a-0d39-4823-a06c-e8121b935f89/resourceGroups/Testresourcegroup1”
   description = "(Optional) The ID of the Resource Group where the Policy Assignment should be created. Resource group id should be in /subscriptions/subscription_id/resourceGroups/resource_group_name format."
 }
 
@@ -90,7 +95,7 @@ variable "assignment_location" {
 
 variable "assignment_description" {
   type        = string
-  default     = null
+  default     = "eastus"
   description = "(Optional) A description to use for this Policy Assignment."
 }
 
