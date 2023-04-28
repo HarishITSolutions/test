@@ -57,7 +57,8 @@ variable "policy_def_scope_type" {
 variable "policy_assignment_name" {
   type        = string
   description = "(Required) The name which should be used for this Policy Assignment"
-}
+  policy_assignment_name = "testpoliicy"
+  }
 
 variable "resource_group_id" {
   type        = string
