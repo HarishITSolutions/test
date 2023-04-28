@@ -30,9 +30,7 @@
 #}
 #
 
-module “policy” {
-source = “OT-terraform-azure-modules/policies/azure”
-version = “0.0.1”
+
 policy_manner = “Policy”
 policy_name = “restrictregion”
 policy_type = “Custom”
