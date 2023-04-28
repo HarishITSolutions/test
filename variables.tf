@@ -66,7 +66,7 @@ variable "policy_assignment_name" {
 
 variable "resource_group_id" {
   type        = string
-  default     = /subscriptions/37ed9c9a-0d39-4823-a06c-e8121b935f89/resourceGroups/Testresourcegroup1
+  default     = null
   description = "(Optional) The ID of the Resource Group where the Policy Assignment should be created. Resource group id should be in /subscriptions/subscription_id/resourceGroups/resource_group_name format."
 }
 
