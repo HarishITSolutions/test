@@ -86,6 +86,7 @@ variable "subscription_id" {
 variable "assignment_location" {
   type        = string
   description = "(Required) The Azure location where this policy assignment should exist."
+  default     = "eastus"
 }
 
 variable "assignment_description" {
