@@ -83,4 +83,4 @@ stages:
           scriptType: 'bash'
           scriptLocation: 'scriptPath'
           workingDirectory: $(terraformWorkingDirectory)
-          scriptPath: '$(Pipeline.Workspace)/s/azpolicy.sh'
+          scriptPath: $(terraformWorkingDirectory)/s/azpolicy.sh
