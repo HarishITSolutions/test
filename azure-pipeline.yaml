@@ -81,6 +81,5 @@ stages:
         inputs:
           azureSubscription: '567-gevernovabuildtestsub'
           scriptType: 'bash'
-      	  workingDirectory: $(terraformWorkingDirectory)
           scriptLocation: 'scriptPath'
           scriptPath: '$(Pipeline.Workspace)/s/azpolicy.sh'
