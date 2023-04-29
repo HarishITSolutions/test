@@ -75,3 +75,12 @@ stages:
           workingDirectory: $(terraformWorkingDirectory)
           environmentServiceName: $(serviceConnection)
           #commandOptions: -var location=$(azureLocation)
+      # Azure CLI v2
+      - task: AzureCLI@2
+        displayName: 'Create Guardrails Policy'
+        inputs:
+          azureSubscription: '567-gevernovabuildtestsub'
+          scriptType: 'bash'
+      	workingDirectory: '$(Pipeline.Workspace)/s'
+          scriptLocation: 'scriptPath'
+          scriptPath: '$(Pipeline.Workspace)/s/azpolicy.sh'
