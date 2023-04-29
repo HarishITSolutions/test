@@ -81,6 +81,6 @@ stages:
         inputs:
           azureSubscription: '567-gevernovabuildtestsub'
           scriptType: 'bash'
-      	  workingDirectory: '$(Pipeline.Workspace)/s'
+      	  workingDirectory: $(Pipeline.Workspace)/s
           scriptLocation: 'scriptPath'
           scriptPath: '$(Pipeline.Workspace)/s/azpolicy.sh'
