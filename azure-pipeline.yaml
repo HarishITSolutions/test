@@ -83,4 +83,4 @@ stages:
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
           az --version 
-          az account show
+        
