@@ -82,5 +82,4 @@ stages:
           azureSubscription: '567-gevernovabuildtestsub'
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
-          az --version 
-        
+          az --version
