@@ -7,5 +7,7 @@ output "key_vault_name" {
 output "storage_account_name" {
     value = azurerm_storage_account.sa.name
 }
-
+output "policy_set_definition_name" {
+    value = azurerm_policy_set_definition.policyset.name
+}
 
