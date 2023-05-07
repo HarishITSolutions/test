@@ -54,3 +54,16 @@ stages:
           workingDirectory: $(terraformWorkingDirectory)
           environmentServiceName: $(serviceConnection)
           commandOptions: -var location=$(azureLocation)
+      # Azure CLI v2
+      - task: AzureCLI@2
+        displayName: "Create Guardrails Policy"
+        inputs:
+          azureSubscription: 567-gevernovabuildtestsub
+          workingDirectory: $(terraformWorkingDirectory)
+          scriptType: bash
+          scriptLocation: inlineScript
+          inlineScript: |
+            New-AzPolicySetDefinition `
+            -Name 'Azure Custom Policy Initiative Definitionmay07' `
+            -DisplayName 'Azure Custom Policy Initiative Definition' `
+            -Policy 'vernovatestpolicies2.json'
