@@ -15,7 +15,7 @@ variables:
   azureLocation: 'westeurope'
   # Terraform settings
   terraformWorkingDirectory: '$(System.DefaultWorkingDirectory)'
-  terraformVersion: '0.12.25'
+  terraformVersion: '1.4.6'
 
 stages:
   - stage: TerraformContinuousIntegration
