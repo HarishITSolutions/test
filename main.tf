@@ -1,3 +1,11 @@
+terraform {
+  backend "azurerm" {
+    resource_group_name      = "azurerm_resource_group.rg.name"
+    storage_account_name     = "tfstab619ffe351b8a08b"
+    container_name           = "tfstatecontainer"
+    key                      = "terraform.tfstate"
+  }
+}
 resource "random_uuid" "uuid" {}
 
 resource "azurerm_resource_group" "rg" {
