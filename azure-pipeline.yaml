@@ -23,6 +23,7 @@ stages:
     jobs:
     - job: TerraformContinuousIntegrationJob
       displayName: TerraformContinuousIntegration - CI Job
+      backendServiceArm: 'terraform-basic-testing-azure-connection'
       pool:
         vmImage: ubuntu-20.04
       steps:
