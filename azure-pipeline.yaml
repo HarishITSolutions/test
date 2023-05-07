@@ -27,12 +27,11 @@ stages:
         vmImage: ubuntu-20.04
       steps:
       # Step 1: install Terraform on the Azure Pipelines agent
-      - task: AzureCLI@2
+      - task: AzureCLI@1
         displayName: Azure CLI
         inputs:
-          azureSubscription: terraform-basic-testing-azure-connection
-          scriptType: ps
-          scriptLocation: inlineScript
+          azureSubscription: '37ed9c9a-0d39-4823-a06c-e8121b935f89'
+          scriptLocation: 'inlineScript'
           inlineScript: |
             az --version
             az account show
