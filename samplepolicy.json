@@ -1,9 +1,0 @@
-{
-   "if": {
-      "field": "location",
-      "notIn": ["eastus", "westus", "centralus"]
-   },
-   "then": {
-      "effect": "audit"
-   }
-}
