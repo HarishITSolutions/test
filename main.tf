@@ -44,11 +44,11 @@ resource "azurerm_storage_account" "sa2" {
   account_tier             = "Standard"
   account_replication_type = "GRS"
 }
-resource "azurerm_storage_container" "sacontainer" {
-  name                  = "tfstatecontainer"
-  storage_account_name  = "azurerm_storage_account.sa2.name"
-  container_access_type = "blob"
-}
+#resource "azurerm_storage_container" "sacontainer" {
+#  name                  = "tfstatecontainer"
+#  storage_account_name  = "azurerm_storage_account.sa2.name"
+#  container_access_type = "blob"
+#}
 #resource "azurerm_policy_set_definition" "policyset" {
 #  name         = "vernovatestPolicySet"
 #  policy_type  = "Custom"
