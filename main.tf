@@ -32,8 +32,8 @@ resource "azurerm_resource_group" "rg" {
 #    ]
 #  }
 #}
-resource "azurerm_storage_account" "sa" {
-  name                     = "vernovatestsa"
+resource "azurerm_storage_account" "sa2" {
+  name                     = "vernovatestsa2"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
@@ -41,7 +41,7 @@ resource "azurerm_storage_account" "sa" {
 }
 resource "azurerm_storage_container" "sacontainer" {
   name                  = "tfstatecontainer"
-  storage_account_name  = "azurerm_storage_account.sa.name"
+  storage_account_name  = "azurerm_storage_account.sa2.name"
   container_access_type = "blob"
 }
 #resource "azurerm_policy_set_definition" "policyset" {
