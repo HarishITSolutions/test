@@ -4,6 +4,14 @@ resource "azurerm_resource_group" "rg" {
   name     = "rg-hello-tf-${random_uuid.uuid.result}"
   location = var.location
 }
+provider "azurerm" {
+  features {
+    key_vault {
+      purge_soft_delete_on_destroy    = true
+      recover_soft_deleted_key_vaults = true
+    }
+  }
+}
 resource "azurerm_key_vault" "kv" {
   name                        = "vernovatestkeyvault"
   location                    = azurerm_resource_group.rg.location
