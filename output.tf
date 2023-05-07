@@ -10,9 +10,9 @@ output "storage_account_name" {
 #output "policy_set_definition_name" {
 #    value = azurerm_policy_set_definition.policyset.name
 #}
-output "storage_container_name" {
-    value = azurerm_storage_container.sacontainer.name
-}
+#output "storage_container_name" {
+#    value = azurerm_storage_container.sacontainer.name
+#}
 
 
 
