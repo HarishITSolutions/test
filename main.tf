@@ -47,7 +47,7 @@ resource "azurerm_storage_account" "sa2" {
 resource "azurerm_storage_container" "sacontainer" {
   name                  = "tfstatecontainer"
   storage_account_name  = "tfstab619ffe351b8a08b"
-  container_access_type = "blob"
+  container_access_type = "private"
 }
 #resource "azurerm_policy_set_definition" "policyset" {
 #  name         = "vernovatestPolicySet"
