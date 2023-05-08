@@ -54,7 +54,7 @@ resource "azurerm_storage_account" "sa2" {
   account_replication_type = "GRS"
 }
 resource "azurerm_storage_container" "sacontainer" {
-  name                  = "tfstatecontainer"
+  name                  = "tfstatecontainer2"
   storage_account_name  = "tfstab619ffe351b8a08b"
   container_access_type = "private"
 }
