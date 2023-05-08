@@ -6,6 +6,10 @@ terraform {
     }
   }
 }
+provider "azurerm" {
+  features {}
+}
+
 #provider "azurerm" {
 #  features {
 #    key_vault {
