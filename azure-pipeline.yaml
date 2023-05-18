@@ -24,7 +24,8 @@ stages:
     - job: TerraformContinuousIntegrationJob
       displayName: TerraformContinuousIntegration - CI Job
       pool:
-        vmImage: ubuntu-20.04
+        #vmImage: ubuntu-20.04
+        name: "testdevops_agentpool"
       steps:
 #      # Step 1: install Terraform on the Azure Pipelines agent
 #      - task: AzureCLI@1
