@@ -5,10 +5,10 @@ pool:
   name: selfhosted-agentpool
   demands:
     - agent.name -equals ansiblevm
-variables:
-- group: 'Constants for Azure Builds'
-- name: 'buildDirectory'
-  value: gransible
+#variables:
+#- group: 'Constants for Azure Builds'
+#- name: 'buildDirectory'
+#  value: gransible
 stages:
 - stage: Clone_Gransible
   jobs:
