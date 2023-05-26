@@ -1,0 +1,20 @@
+name: $(subscription_name) Standard Build $(Date:MMddyy)
+trigger:
+  enabled: false
+pool:
+  name: selfhosted-agentpool
+  demands:
+    - agent.name -equals ansiblevm
+variables:
+- group: 'Constants for Azure Builds'
+- name: 'buildDirectory'
+  value: gransible
+stages:
+- stage: Clone_Gransible
+  jobs:
+  - job: clone_gransible
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: "if [ -d /workspace/$(buildDirectory)/$(subscription_name)/GRANSIBLE ]\nthen\n  cd /workspace/$(buildDirectory)/$(subscription_name)/GRANSIBLE\n  git pull\nelse\n  mkdir -p /workspace/$(buildDirectory)/$(subscription_name)\n  cd /workspace/$(buildDirectory)/$(subscription_name)\n  git clone --depth 1 https://503356053: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@github.build.ge.com/PublicCloudServices/GRANSIBLE.git\nfi\nif [ ! -d /workspace/GRAZURE/ ]\nthen\n  cd /workspace/\n  git clone --depth 1 https://503356053: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@github.build.ge.com/PublicCloudServices/GRAZURE.git\nelse \n  cd /workspace/GRAZURE/\n  git pull\nfi  \nif [ ! -d /workspace/GRMODULES/ ]\nthen\n  cd /workspace/\n  git clone --depth 1 https://503356053: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@github.build.ge.com/PublicCloudServices/GRMODULES.git\nelse \n  cd /workspace/GRMODULES/\n  git pull  \nfi\n"
+      displayName: "Clone gransible"
