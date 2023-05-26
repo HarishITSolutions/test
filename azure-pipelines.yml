@@ -1,6 +1,6 @@
 name: $(subscription_name) Standard Build $(Date:MMddyy)
-trigger:
-  enabled: false
+trigger: none
+#  enabled: false
 pool:
   name: selfhosted-agentpool
   demands:
