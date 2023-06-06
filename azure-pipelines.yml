@@ -4,7 +4,7 @@ trigger: none
 pool:
   name: qwertypool
   demands:
-    - agent.name -equals querty_1
+    - agent.name -equals quertqwerty
 #variables:
 #- group: 'Constants for Azure Builds'
 #- name: 'buildDirectory'
