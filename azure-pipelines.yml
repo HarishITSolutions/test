@@ -2,9 +2,9 @@ name: $(subscription_name) Standard Build $(Date:MMddyy)
 trigger: none
 #  enabled: false
 pool:
-  name: selfhosted-agentpool
-  demands:
-    - agent.name -equals ansiblevm
+  name: qwertypool
+  #demands:
+  #  - agent.name -equals ansiblevm
 #variables:
 #- group: 'Constants for Azure Builds'
 #- name: 'buildDirectory'
