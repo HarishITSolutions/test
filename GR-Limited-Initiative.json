@@ -1,0 +1,138 @@
+{
+  "Name": "f042ac74-1eda-4621-af11-38b7d22b6091",
+  "ResourceId": "/providers/Microsoft.Management/managementGroups/GR-AZURE-Limited/providers/Microsoft.Authorization/policySetDefinitions/f042ac74-1eda-4621-af11-38b7d22b6091",
+  "ResourceName": "f042ac74-1eda-4621-af11-38b7d22b6091",
+  "ResourceType": "Microsoft.Authorization/policySetDefinitions",
+  "SubscriptionId": null,
+  "PolicySetDefinitionId": "/providers/Microsoft.Management/managementGroups/GR-AZURE-Limited/providers/Microsoft.Authorization/policySetDefinitions/f042ac74-1eda-4621-af11-38b7d22b6091",
+  "Properties": {
+    "Description": "This is the initiative where all of the Test GR policy definitions will be assigned.",
+    "DisplayName": "Test-GR-Limited-Initiative",
+    "Metadata": {
+      "category": "Guardrails",
+      "parameterScopes": {
+        "resourceTypes": "/providers/Microsoft.Management/managementGroups/GR-AZURE-Limited"
+      },
+      "createdBy": null,
+      "createdOn": null,
+      "updatedBy": "8d54dc8d-80a7-44d3-871b-8fad42818553",
+      "updatedOn": "2021-10-05T13:33:15.867697Z",
+      "gitHubPolicy": {
+        "digest": "cec768dc03b14cef4ce0ffd68dd24839f1e132c8",
+        "repoName": "praveenmasand/ASC_Enable_Windows_VM_Security_Events",
+        "commitSha": "46b3341c784be14aba53a60657a0c5d133d41790",
+        "runUrl": "https://github.com/praveenmasand/ASC_Enable_Windows_VM_Security_Events/actions/runs/1243000791",
+        "filepath": "initiatives/GR-Limited-Initiative_f042ac74-1eda-4621-af11-38b7d22b6091"
+      }
+    },
+    "Parameters": {},
+    "PolicyDefinitionGroups": [],
+    "PolicyDefinitions": [
+      {
+        "policyDefinitionReferenceId": "3904412718381418107",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/Guardrails/providers/Microsoft.Authorization/policyDefinitions/281dd069-4aee-4e69-9eb6-bd69f4249051",
+        "parameters": {},
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "636009290814315556",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/Guardrails/providers/Microsoft.Authorization/policyDefinitions/281dd069-4aee-4e69-9eb6-bd69f42490a2",
+        "parameters": {},
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "7879589846464532771",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/Guardrails/providers/Microsoft.Authorization/policyDefinitions/281dd069-4aee-4e69-9eb6-bd69f4249033",
+        "parameters": {},
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "14354004755344827951",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/Guardrails/providers/Microsoft.Authorization/policyDefinitions/281dd069-4aee-4e69-9eb6-bd69f4249080",
+        "parameters": {},
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "16662877272252698727",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/Guardrails/providers/Microsoft.Authorization/policyDefinitions/281dd069-4aee-4e69-9eb6-bd69f42490b3",
+        "parameters": {},
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "15154570674473430372",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/Guardrails/providers/Microsoft.Authorization/policyDefinitions/281dd069-4aee-4e69-9eb6-bd69f42490c4",
+        "parameters": {},
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "8872657924769633499",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/GR-AZURE-Limited/providers/Microsoft.Authorization/policyDefinitions/b4a1f143-0c28-4d24-a893-4d156262f617",
+        "parameters": {},
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "8219583254862401275",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/GR-AZURE-Limited/providers/Microsoft.Authorization/policyDefinitions/fec1c98c-cd27-431f-a267-9b8e03629bc1",
+        "parameters": {},
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "3138855108781729037",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/Guardrails/providers/Microsoft.Authorization/policyDefinitions/5a361124-d65d-4746-a79a-5bb9378994fd",
+        "parameters": {},
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "5764040603431207194",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/Guardrails/providers/Microsoft.Authorization/policyDefinitions/aec1d26f-0917-4224-acab-417fff56c8d8",
+        "parameters": {},
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "6205820583030355788",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/CoretechAzure/providers/Microsoft.Authorization/policyDefinitions/be8501e7-6887-490f-bc98-39fd2f70f5c4",
+        "parameters": {},
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "Inherit a tag from the resource group if missing_1",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/ea3f2387-9b95-492a-a190-fcdc54f7b070",
+        "parameters": {
+          "tagName": {
+            "value": "uai"
+          }
+        },
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "Inherit a tag from the resource group if missing_2",
+        "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/ea3f2387-9b95-492a-a190-fcdc54f7b070",
+        "parameters": {
+          "tagName": {
+            "value": "env"
+          }
+        },
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "Audit VNET Creation_1",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/Guardrails/providers/Microsoft.Authorization/policyDefinitions/70d00fd5-aa2e-43aa-b4ef-0886f8d64e55",
+        "parameters": {},
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "DeployIfNotExists-Automatically-Configure-NSG-To-Enable-Flowlogs_1",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/CoretechAzure/providers/Microsoft.Authorization/policyDefinitions/5a53c236-537d-4a50-9faf-c06eee882d12",
+        "parameters": {},
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "Deny Enabling the MDE integration in ASC_1",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/CoretechAzure/providers/Microsoft.Authorization/policyDefinitions/58954e54-47fe-404c-9308-7c338754d5b6",
+        "parameters": {},
+        "groupNames": []
+      }
+    ],
+    "PolicyType": 1
+  }
+}
