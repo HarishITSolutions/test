@@ -5,6 +5,8 @@ trigger:
   branches:
     include:
     - '*'
+pool:
+  name: selfhostedagentpoolvmss
   paths:
     include:
     - 'samples/integration-testing/src/*'
