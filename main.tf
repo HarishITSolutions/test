@@ -10,7 +10,7 @@ terraform {
 resource "random_uuid" "uuid" {}
 
 resource "azurerm_resource_group" "rg" {
-  name     = "rg-hello-tf-${random_uuid.uuid.result}"
+  name     = "rg-hari-${random_uuid.uuid.result}"
   location = var.location
 }
 #resource "azurerm_key_vault" "kv" {
@@ -42,22 +42,22 @@ resource "azurerm_resource_group" "rg" {
 #  }
 #}
 
-resource "random_id" "storage_account" {
-  byte_length = 8
-}
+// resource "random_id" "storage_account" {
+//   byte_length = 8
+// }
 
-resource "azurerm_storage_account" "sa2" {
-  name                     = "tfsta${lower(random_id.storage_account.hex)}"
-  resource_group_name      = azurerm_resource_group.rg.name
-  location                 = azurerm_resource_group.rg.location
-  account_tier             = "Standard"
-  account_replication_type = "GRS"
-}
-resource "azurerm_storage_container" "sacontainer" {
-  name                  = "tfstatecontainer2"
-  storage_account_name  = "tfstab619ffe351b8a08b"
-  container_access_type = "private"
-}
+// resource "azurerm_storage_account" "sa2" {
+//   name                     = "tfsta${lower(random_id.storage_account.hex)}"
+//   resource_group_name      = azurerm_resource_group.rg.name
+//   location                 = azurerm_resource_group.rg.location
+//   account_tier             = "Standard"
+//   account_replication_type = "GRS"
+// }
+// resource "azurerm_storage_container" "sacontainer" {
+//   name                  = "tfstatecontainer2"
+//   storage_account_name  = "tfstab619ffe351b8a08b"
+//   container_access_type = "private"
+// }
 #resource "azurerm_policy_set_definition" "policyset" {
 #  name         = "vernovatestPolicySet"
 #  policy_type  = "Custom"
