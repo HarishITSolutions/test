@@ -6,6 +6,35 @@ terraform {
     }
   }
 }
+
+// terraform {
+//   required_providers {
+//     azurerm = {
+//       source = "hashicorp/azurerm"
+//       version         = "=3.0.0"
+//     }
+//     backend "azurerm" {
+//       tenant_id                = "15ccb6d1-d335-4996-b6f9-7b6925f08121"
+//       subscription_id          = "37ed9c9a-0d39-4823-a06c-e8121b935f89"
+//       resource_group_name      = "Testresourcegroup1"
+//       storage_account_name     = "tfstatestoracc"
+//       container_name           = "tfstatecontainer"
+//       key                      = "terraform.tfstate"
+//     }
+//   }
+// }
+
+
+terraform {
+  backend "azurerm" {
+    subscription_id          = "37ed9c9a-0d39-4823-a06c-e8121b935f89"
+    resource_group_name      = "Testresourcegroup1"
+    storage_account_name     = "tfstatestoracc"
+    container_name           = "tfstatecontainer"
+    key                      = "terraform.tfstate"
+  }
+}
+
 provider "azurerm" {
   features {}
 }
