@@ -5,9 +5,6 @@ trigger:
   branches:
     include:
     - '*'
-  paths:
-    include:
-    - 'samples/integration-testing/src/*'
 
 variables:
   # There must be an Azure Service Connection with that name defined in your Azure DevOps settings. See https://docs.microsoft.com/en-us/azure/devops/pipelines/library/connect-to-azure?view=azure-devops
@@ -17,15 +14,15 @@ variables:
   terraformWorkingDirectory: '$(System.DefaultWorkingDirectory)'
   terraformVersion: '1.4.6'
 
+pool:
+  vmImage: ubuntu-latest
+
 stages:
   - stage: TerraformContinuousIntegration
     displayName: Terraform Module - CI
     jobs:
     - job: TerraformContinuousIntegrationJob
       displayName: TerraformContinuousIntegration - CI Job
-      pool:
-        #vmImage: ubuntu-20.04
-        name: "testdevops_agentpool"
       steps:
 #      # Step 1: install Terraform on the Azure Pipelines agent
 #      - task: AzureCLI@1
@@ -81,16 +78,3 @@ stages:
           workingDirectory: $(terraformWorkingDirectory)
           environmentServiceName: $(serviceConnection)
           commandOptions: -var location=$(azureLocation)
-      # Azure CLI v2
-      - task: AzureCLI@2
-        displayName: "Create Guardrails Policy"
-        inputs:
-          azureSubscription: 567-gevernovabuildtestsub
-          workingDirectory: $(terraformWorkingDirectory)
-          scriptType: bash
-          scriptLocation: inlineScript
-          inlineScript: |
-            New-AzPolicySetDefinition `
-            -Name 'Azure Custom Policy Initiative Def' `
-            -DisplayName 'Azure Custom Policy Initiative Def' `
-            -Policy 'GR-Limited-Initiative.json'
