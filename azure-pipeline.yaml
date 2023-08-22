@@ -10,7 +10,7 @@ pool:
 variables:
   - group: 'Policy_Variable_Group'
   - name: 'serviceConnection'
-    value: devops
+    value: tfstatetestsc
   - name: 'azureLocation'
     value: westeurope
   - name: 'terraformWorkingDirectory'
@@ -27,7 +27,7 @@ stages:
       variables:
       - group: 'Policy_Variable_Group'
       - name: 'serviceConnection'
-        value: devops
+        value: tfstatetestsc
       - name: 'azureLocation'
         value: westeurope
       - name: 'terraformWorkingDirectory'
@@ -42,7 +42,7 @@ stages:
             - task: AzureCLI@2
               displayName: 'Azure CLI'
               inputs:
-                azureSubscription: 'devops'
+                azureSubscription: 'tfstatetestsc'
                 addSpnToEnvironment: true
                 scriptType: 'bash'
                 scriptLocation: 'inlineScript'
@@ -55,7 +55,7 @@ stages:
             - task: AzureCLI@1
               displayName: Azure CLI 2
               inputs:
-                azureSubscription: 'devops'
+                azureSubscription: 'tfstatetestsc'
                 scriptLocation: 'inlineScript'
                 inlineScript: |
                   export subscription_id=$(subscription_id)
@@ -73,7 +73,7 @@ stages:
         - task: AzureCLI@2
           displayName: 'Azure CLI - Authentication'
           inputs:
-            azureSubscription: 'devops'
+            azureSubscription: 'tfstatetestsc'
             addSpnToEnvironment: true
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
