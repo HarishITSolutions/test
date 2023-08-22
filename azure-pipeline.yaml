@@ -10,6 +10,8 @@ trigger: none # Disable CI triggers.
 #     - '*'
 
 variables:
+# - group: 'Subscription Variables Build Template'
+  - group: 'Constants for Azure Builds'
   # There must be an Azure Service Connection with that name defined in your Azure DevOps settings. See https://docs.microsoft.com/en-us/azure/devops/pipelines/library/connect-to-azure?view=azure-devops
   serviceConnection: 'terraform-basic-testing-azure-connection'
   azureLocation: 'westeurope'
@@ -27,15 +29,19 @@ stages:
     - job: TerraformContinuousIntegrationJob
       displayName: TerraformContinuousIntegration - CI Job
       steps:
-#      # Step 1: install Terraform on the Azure Pipelines agent
-#      - task: AzureCLI@1
-#        displayName: Azure CLI
-#        inputs:
-#          azureSubscription: 'terraform-basic-testing-azure-connection'
-#          scriptLocation: 'inlineScript'
-#          inlineScript: |
-#            az --version
-#            az account show
+     # Step 1: install Terraform on the Azure Pipelines agent
+     - task: AzureCLI@1
+       displayName: Azure CLI
+       inputs:
+         azureSubscription: 'terraform-basic-testing-azure-connection'
+         scriptLocation: 'inlineScript'
+         inlineScript: |
+           export subscription_id=$(subscription_id)
+           export resource_group_name=$(resource_group_name)
+           export storage_account_name=$(storage_account_name)
+           export container_name=$(container_name)
+           export key=$(key)
+           export access_key=$(access_key)
       - task: AzureCLI@2
         displayName: 'Azure CLI'
         inputs:
