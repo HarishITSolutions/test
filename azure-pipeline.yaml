@@ -38,18 +38,18 @@ stages:
       displayName: TerraformContinuousIntegration - CI Job
       steps:
      # Step 1: install Terraform on the Azure Pipelines agent
-     - task: AzureCLI@1
-       displayName: Azure CLI
-       inputs:
-         azureSubscription: 'terraform-basic-testing-azure-connection'
-         scriptLocation: 'inlineScript'
-         inlineScript: |
-           export subscription_id=$(subscription_id)
-           export resource_group_name=$(resource_group_name)
-           export storage_account_name=$(storage_account_name)
-           export container_name=$(container_name)
-           export key=$(key)
-           export access_key=$(access_key)
+      - task: AzureCLI@1
+        displayName: Azure CLI
+        inputs:
+          azureSubscription: 'terraform-basic-testing-azure-connection'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            export subscription_id=$(subscription_id)
+            export resource_group_name=$(resource_group_name)
+            export storage_account_name=$(storage_account_name)
+            export container_name=$(container_name)
+            export key=$(key)
+            export access_key=$(access_key)
       - task: AzureCLI@2
         displayName: 'Azure CLI'
         inputs:
