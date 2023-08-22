@@ -9,14 +9,7 @@ pool:
 
 variables:
   - group: 'Policy_Variable_Group'
-  - name: 'serviceConnection'
-    value: terraform-basic-testing-azure-connection
-  - name: 'azureLocation'
-    value: westeurope
-  - name: 'terraformWorkingDirectory'
-    value: $(System.DefaultWorkingDirectory)
-  - name: 'terraformVersion'
-    value: 1.4.6
+  #   value: '-var storageName=$(Storage-Name) -var containerName=$(Container-Name) -var stateFileName=$(State-FileName) -var accessKey=$(Access-Key)'
 
 stages:
   - stage: Build_Approval
@@ -25,24 +18,19 @@ stages:
     - deployment: ContinuousIntegrationJob
       displayName: ContinuousIntegrationJob
       variables:
-      - group: 'Policy_Variable_Group'
-      - name: 'serviceConnection'
-        value: terraform-basic-testing-azure-connection
-      - name: 'azureLocation'
-        value: westeurope
-      - name: 'terraformWorkingDirectory'
-        value: $(System.DefaultWorkingDirectory)
-      - name: 'terraformVersion'
-        value: 1.4.6
+        serviceConnection: 'tfstatetestsc'
+        azureLocation: 'eastus'
+        terraformWorkingDirectory: '$(System.DefaultWorkingDirectory)'
+        terraformVersion: '1.5.4'
       environment: 'sandbox'
       strategy:
         runOnce:
           deploy:
             steps:
             - task: AzureCLI@2
-              displayName: 'Azure CLI'
+              displayName: 'Azure CLI - Authentication'
               inputs:
-                azureSubscription: 'terraform-basic-testing-azure-connection'
+                azureSubscription: 'tfstatetestsc'
                 addSpnToEnvironment: true
                 scriptType: 'bash'
                 scriptLocation: 'inlineScript'
@@ -51,19 +39,6 @@ stages:
                   echo "##vso[task.setvariable variable=ARM_CLIENT_ID]${servicePrincipalId}"
                   echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]${servicePrincipalKey}"
                   echo "##vso[task.setvariable variable=ARM_TENANT_ID]${tenantId}"
-
-            - task: AzureCLI@1
-              displayName: Azure CLI 2
-              inputs:
-                azureSubscription: 'terraform-basic-testing-azure-connection'
-                scriptLocation: 'inlineScript'
-                inlineScript: |
-                  export subscription_id=$(subscription_id)
-                  export resource_group_name=$(resource_group_name)
-                  export storage_account_name=$(storage_account_name)
-                  export container_name=$(container_name)
-                  export key=$(key)
-                  export access_key=$(access_key)                  
   - stage: Terraform_Steps
     displayName: Terraform Jobs
     jobs:
@@ -73,7 +48,7 @@ stages:
         - task: AzureCLI@2
           displayName: 'Azure CLI - Authentication'
           inputs:
-            azureSubscription: 'terraform-basic-testing-azure-connection'
+            azureSubscription: 'tfstatetestsc'
             addSpnToEnvironment: true
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
@@ -82,36 +57,43 @@ stages:
               echo "##vso[task.setvariable variable=ARM_CLIENT_ID]${servicePrincipalId}"
               echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]${servicePrincipalKey}"
               echo "##vso[task.setvariable variable=ARM_TENANT_ID]${tenantId}"      
-        # Step 1: install Terraform on the Azure Pipelines agent
-        - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
-          displayName: 'Install Terraform'
+        - task: TerraformCLI@0
           inputs:
-            terraformVersion: $(terraformVersion)
-        # Step 2: run Terraform init to initialize the workspace
-        - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
-          displayName: 'Run terraform init'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)'
+            commandOptions: '-backend-config="storage_account_name=$(Storage-Name)" -backend-config="container_name=$(Container-Name)" -backend-config="key=$(State-FileName)" -backend-config="access_key=$(Access-Key)"'
+#            commandOptions: '-var storageName=$(Storage-Name) -var containerName=$(Container-Name) -var stateFileName=$(State-FileName) -var accessKey=$(Access-Key) -var yamlFileName=$(Yaml-File)'
+#            secureVarsFile: 'secret.tfvars'
+            allowTelemetryCollection: true
+        - task: TerraformCLI@0
+          displayName: 'Terraform Plan'
           inputs:
-            command: init
-            workingDirectory: $(terraformWorkingDirectory)
-        # Step 3: run Terraform validate to validate HCL syntax
-        - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
-          displayName: 'Run terraform validate'
+            command: 'plan'
+            # commandOptions: '$(inputvariables)'
+            allowTelemetryCollection: true
+            workingDirectory: '$(System.DefaultWorkingDirectory)'
+        
+        - task: ArchiveFiles@2
+          displayName: 'Create Plan Artifact'
           inputs:
-            command: validate
-            workingDirectory: $(terraformWorkingDirectory)
-        # Step 4: run Terraform plan to validate HCL syntax
-        - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
-          displayName: 'Run terraform plan'
+            rootFolderOrFile: '$(Build.SourcesDirectory)'
+            includeRootFolder: false
+            archiveType: 'tar'
+            tarCompression: 'gz'
+            archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).tgz'
+            replaceExistingArchive: true
+        
+        - task: PublishBuildArtifacts@1
+          displayName: 'Publish Plan Artifact'
           inputs:
-            command: plan
-            workingDirectory: $(terraformWorkingDirectory)
-            environmentServiceName: $(serviceConnection)
-            commandOptions: -var location=$(azureLocation)
-        # Step 5: run Terraform apply
-        - task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
-          displayName: 'Run terraform apply'
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            ArtifactName: '$(Build.BuildId)-tfplan'
+            publishLocation: 'Container'
+        
+        - task: TerraformCLI@0
+          displayName: 'Publish Plan to plan.out'
           inputs:
-            command: apply
-            workingDirectory: $(terraformWorkingDirectory)
-            environmentServiceName: $(serviceConnection)
-            commandOptions: -var location=$(azureLocation)
+            command: 'plan'
+            # commandOptions: '$(inputvariables)'
+            allowTelemetryCollection: true
+            publishPlanResults: 'plan.out' 
