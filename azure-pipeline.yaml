@@ -11,13 +11,13 @@ trigger: none # Disable CI triggers.
 
 variables:
 # - group: 'Subscription Variables Build Template'
-  - group: 'Constants for Azure Builds'
+  - group: 'Policy_Variable_Group'
   # There must be an Azure Service Connection with that name defined in your Azure DevOps settings. See https://docs.microsoft.com/en-us/azure/devops/pipelines/library/connect-to-azure?view=azure-devops
-  serviceConnection: 'terraform-basic-testing-azure-connection'
-  azureLocation: 'westeurope'
+  serviceConnection: "terraform-basic-testing-azure-connection"
+  azureLocation: "westeurope"
   # Terraform settings
-  terraformWorkingDirectory: '$(System.DefaultWorkingDirectory)'
-  terraformVersion: '1.4.6'
+  terraformWorkingDirectory: "$(System.DefaultWorkingDirectory)"
+  terraformVersion: "1.4.6"
 
 pool:
   vmImage: ubuntu-latest
