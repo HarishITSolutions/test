@@ -1,10 +1,11 @@
 terraform {
   backend "azurerm" {
-    subscription_id          = "37ed9c9a-0d39-4823-a06c-e8121b935f89"
-    resource_group_name      = "Testresourcegroup1"
-    storage_account_name     = "tfstatestoracc"
-    container_name           = "tfstatecontainer"
-    key                      = "terraform.tfstate"
+    subscription_id          = $(subscription_id)
+    resource_group_name      = $(resource_group_name)
+    storage_account_name     = $(storage_account_name)
+    container_name           = (container_name)
+    key                      = $(key)
+    access_key               = (access_key)
   }
 }
 resource "random_uuid" "uuid" {}
