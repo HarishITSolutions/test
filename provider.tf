@@ -7,6 +7,16 @@ terraform {
   }
 }
 
+terraform {
+  backend "azurerm" {
+    subscription_id          = $(subscription_id2)
+    resource_group_name      = $(resource_group_name)
+    storage_account_name     = $(storage_account_name)
+    container_name           = $(container_name)
+    key                      = $(key)
+    access_key               = $(access_key)
+  }
+}
 
 provider "azurerm" {
   skip_provider_registration = "true"
