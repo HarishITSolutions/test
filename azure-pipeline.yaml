@@ -37,15 +37,15 @@ stages:
       displayName: TerraformContinuousIntegration - CI Job
       steps:
       variables:
-        - group: 'Policy_Variable_Group'
-        - name: 'serviceConnection'
-          value: terraform-basic-testing-azure-connection
-        - name: 'azureLocation'
-          value: westeurope
-        - name: 'terraformWorkingDirectory'
-          value: $(System.DefaultWorkingDirectory)
-        - name: 'terraformVersion'
-          value: 1.4.6
+      - group: 'Policy_Variable_Group'
+      - name: 'serviceConnection'
+        value: terraform-basic-testing-azure-connection
+      - name: 'azureLocation'
+        value: westeurope
+      - name: 'terraformWorkingDirectory'
+        value: $(System.DefaultWorkingDirectory)
+      - name: 'terraformVersion'
+        value: 1.4.6
      # Step 1: install Terraform on the Azure Pipelines agent
       - task: AzureCLI@1
         displayName: Azure CLI
