@@ -1,0 +1,108 @@
+
+# Azure Pipeline that run basic continuous integration on a Terraform project
+# Running Pipeline from Main Branch, Creating artifacts, Publishing the artifacts and create plan.out
+
+trigger: none # Disable CI triggers.
+
+# trigger:
+#  branches:
+#    include:
+#   - main
+#    - Development/*
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+#  - name: "inputvariables"
+#    value: '-var storageName=$(Storage-Name) -var containerName=$(Container-Name) -var stateFileName=$(State-FileName) -var accessKey=$(Access-Key) -var yamlFileName=$(Yaml-File)'
+  storageName: $(Storage-Name)
+  containerName: $(Container-Name)
+  stateFileName: $(State-FileName)
+  accessKey: $(Access-Key)
+  yamlFileName: $(Yaml-File)
+
+stages:
+  - stage: Build_Approval
+    displayName: Build Approval
+    jobs:
+    - deployment: ContinuousIntegrationJob
+      displayName: ContinuousIntegrationJob
+      variables:
+        serviceConnection: 'sandbox-devops'
+        azureLocation: 'eastus'
+        terraformWorkingDirectory: '$(System.DefaultWorkingDirectory)'
+        terraformVersion: '1.5.4'
+      environment: 'sandbox'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - task: AzureCLI@2
+              displayName: 'Azure CLI - Authentication'
+              inputs:
+                azureSubscription: 'sandbox-devops'
+                addSpnToEnvironment: true
+                scriptType: 'bash'
+                scriptLocation: 'inlineScript'
+                inlineScript: |
+                  echo "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID]$(az account show --query="id" -o tsv)"
+                  echo "##vso[task.setvariable variable=ARM_CLIENT_ID]${servicePrincipalId}"
+                  echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]${servicePrincipalKey}"
+                  echo "##vso[task.setvariable variable=ARM_TENANT_ID]${tenantId}"
+  - stage: Terraform_Steps
+    displayName: Terraform Jobs
+    jobs:
+    - job: ContinuousIntegrationJob
+      displayName: ContinuousIntegrationJob
+      steps:
+        - task: AzureCLI@2
+          displayName: 'Azure CLI - Authentication'
+          inputs:
+            azureSubscription: 'sandbox-devops'
+            addSpnToEnvironment: true
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              echo "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID]$(az account show --query="id" -o tsv)"
+              echo "##vso[task.setvariable variable=ARM_CLIENT_ID]${servicePrincipalId}"
+              echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]${servicePrincipalKey}"
+              echo "##vso[task.setvariable variable=ARM_TENANT_ID]${tenantId}"      
+        - task: TerraformCLI@0
+          inputs:
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)'
+#            commandOptions: '-var storageName=$(Storage-Name) -var containerName=$(Container-Name) -var stateFileName=$(State-FileName) -var accessKey=$(Access-Key) -var yamlFileName=$(Yaml-File)'
+            secureVarsFile: 'secret.tfvars'
+            allowTelemetryCollection: true
+        # - task: TerraformCLI@0
+        #   displayName: 'Terraform Plan'
+        #   inputs:
+        #     command: 'plan'
+        #     commandOptions: '$(inputvariables)'
+        #     allowTelemetryCollection: true
+        #     workingDirectory: '$(System.DefaultWorkingDirectory)'
+        
+        # - task: ArchiveFiles@2
+        #   displayName: 'Create Plan Artifact'
+        #   inputs:
+        #     rootFolderOrFile: '$(Build.SourcesDirectory)'
+        #     includeRootFolder: false
+        #     archiveType: 'tar'
+        #     tarCompression: 'gz'
+        #     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).tgz'
+        #     replaceExistingArchive: true
+        
+        # - task: PublishBuildArtifacts@1
+        #   displayName: 'Publish Plan Artifact'
+        #   inputs:
+        #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        #     ArtifactName: '$(Build.BuildId)-tfplan'
+        #     publishLocation: 'Container'
+        
+        # - task: TerraformCLI@0
+        #   displayName: 'Publish Plan to plan.out'
+        #   inputs:
+        #     command: 'plan'
+        #     commandOptions: '$(inputvariables)'
+        #     allowTelemetryCollection: true
+        #     publishPlanResults: 'plan.out' 
