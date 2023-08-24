@@ -46,7 +46,7 @@ stages:
                 ScriptType: 'InlineScript'
                 Inline: |
                   $HostedIPAddress = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
-                  Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -AccountName "tfstatestoracc" -IPAddressOrRange "$HostedIPAddress/32"
+                  Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -AccountName "tfstatestoracc" -IPAddressOrRange "$HostedIPAddress"
                 azurePowerShellVersion: 'LatestVersion'
             # - task: PowerShell@2
             #   inputs:
