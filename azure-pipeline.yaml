@@ -42,7 +42,7 @@ stages:
             
             - task: AzurePowerShell@5
               inputs:
-                azureSubscription: 'tfstatetestsc-prod'
+                azureSubscription: 'tfstatesc-prod'
                 ScriptType: 'InlineScript'
                 Inline: |
                   $HostedIPAddress = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
