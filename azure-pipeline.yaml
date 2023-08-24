@@ -40,14 +40,21 @@ stages:
                   echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]${servicePrincipalKey}"
                   echo "##vso[task.setvariable variable=ARM_TENANT_ID]${tenantId}"
             
-            - task: AzurePowerShell@5
+            # - task: AzurePowerShell@5
+            #   inputs:
+            #     azureSubscription: 'tfstatetestsc'
+            #     ScriptType: 'InlineScript'
+            #     Inline: |
+            #       $HostedIPAddress = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
+            #       Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -AccountName "tfstatestoracc" -IPAddressOrRange "$HostedIPAddress/32"
+            #     azurePowerShellVersion: 'LatestVersion'
+            - task: PowerShell@2
               inputs:
-                azureSubscription: 'tfstatetestsc'
-                ScriptType: 'InlineScript'
-                Inline: |
+                targetType: 'inline'
+                script: |
                   $HostedIPAddress = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
-                  Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -AccountName "tfstatestoracc" -IPAddressOrRange "$HostedIPAddress/32"
-                azurePowerShellVersion: 'LatestVersion'
+                   Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -AccountName "tfstatestoracc" -IPAddressOrRange "$HostedIPAddress/32"
+                runScriptInSeparateScope: true
   - stage: Terraform_Steps
     displayName: Terraform Jobs
     jobs:
@@ -74,6 +81,14 @@ stages:
 #            commandOptions: '-var storageName=$(Storage-Name) -var containerName=$(Container-Name) -var stateFileName=$(State-FileName) -var accessKey=$(Access-Key) -var yamlFileName=$(Yaml-File)'
 #            secureVarsFile: 'secret.tfvars'
             allowTelemetryCollection: true
+
+        - task: PowerShell@2
+          inputs:
+            targetType: 'inline'
+            script: |
+              $HostedIPAddress = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
+               Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -AccountName "tfstatestoracc" -IPAddressOrRange "$HostedIPAddress/32"
+            runScriptInSeparateScope: true
         - task: TerraformCLI@0
           displayName: 'Terraform Plan'
           inputs:
