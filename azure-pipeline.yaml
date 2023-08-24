@@ -40,21 +40,21 @@ stages:
                   echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]${servicePrincipalKey}"
                   echo "##vso[task.setvariable variable=ARM_TENANT_ID]${tenantId}"
             
-            # - task: AzurePowerShell@5
-            #   inputs:
-            #     azureSubscription: 'tfstatetestsc'
-            #     ScriptType: 'InlineScript'
-            #     Inline: |
-            #       $HostedIPAddress = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
-            #       Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -AccountName "tfstatestoracc" -IPAddressOrRange "$HostedIPAddress/32"
-            #     azurePowerShellVersion: 'LatestVersion'
-            - task: PowerShell@2
+            - task: AzurePowerShell@5
               inputs:
-                targetType: 'inline'
-                script: |
+                azureSubscription: 'tfstatetestsc-prod'
+                ScriptType: 'InlineScript'
+                Inline: |
                   $HostedIPAddress = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
-                   Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -AccountName "tfstatestoracc" -IPAddressOrRange "$HostedIPAddress/32"
-                runScriptInSeparateScope: true
+                  Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -AccountName "tfstatestoracc" -IPAddressOrRange "$HostedIPAddress/32"
+                azurePowerShellVersion: 'LatestVersion'
+            # - task: PowerShell@2
+            #   inputs:
+            #     targetType: 'inline'
+            #     script: |
+            #       $HostedIPAddress = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
+            #        Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -AccountName "tfstatestoracc" -IPAddressOrRange "$HostedIPAddress/32"
+            #     runScriptInSeparateScope: true
   - stage: Terraform_Steps
     displayName: Terraform Jobs
     jobs:
