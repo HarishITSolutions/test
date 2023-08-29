@@ -78,7 +78,7 @@ stages:
           inputs:
             command: 'init'
             workingDirectory: '$(System.DefaultWorkingDirectory)'
-            commandOptions: '-backend-config="storage_account_name=$(Storage-Name)" -backend-config="container_name=$(Container-Name)" -backend-config="key=$(State-FileName)" -backend-config="access_key=$(Access-Key)"'
+            commandOptions: '-reconfigure -backend-config="storage_account_name=$(Storage-Name)" -backend-config="container_name=$(Container-Name)" -backend-config="key=$(State-FileName)" -backend-config="access_key=$(Access-Key)"'
 #            commandOptions: '-var storageName=$(Storage-Name) -var containerName=$(Container-Name) -var stateFileName=$(State-FileName) -var accessKey=$(Access-Key) -var yamlFileName=$(Yaml-File)'
 #            secureVarsFile: 'secret.tfvars'
             allowTelemetryCollection: true
