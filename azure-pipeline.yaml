@@ -74,6 +74,17 @@ stages:
               echo "##vso[task.setvariable variable=ARM_CLIENT_ID]${servicePrincipalId}"
               echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]${servicePrincipalKey}"
               echo "##vso[task.setvariable variable=ARM_TENANT_ID]${tenantId}"      
+
+        - task: AzurePowerShell@5
+          inputs:
+            azureSubscription: 'tfstatesc-prod'
+            ScriptType: 'InlineScript'
+            Inline: |
+              $HostedIPAddress = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
+              Write-Host "ip is : $HostedIPAddress"
+              Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -AccountName "tfstatestoracc" -IPAddressOrRange "$HostedIPAddress"
+            azurePowerShellVersion: 'LatestVersion'
+
         - task: TerraformCLI@0
           inputs:
             command: 'init'
@@ -92,18 +103,18 @@ stages:
         #       Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -AccountName "tfstatestoracc" -IPAddressOrRange "$HostedIPAddress"
         #     runScriptInSeparateScope: true
 
-        - task: AzurePowerShell@5
-          inputs:
-                azureSubscription: 'tfstatesc-prod'
-                ScriptType: 'InlineScript'
-                Inline: |
-                  $ip = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
-                  Write-Host "ip is : $ip"
-                  Connect-AzAccount -Subscription '567-gevernovabuildtestsub'
-                  Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -Name "tfstatestoracc" -IPAddressOrRange "$ip"
-                  Start-Sleep -s 20
-                azurePowerShellVersion: 'LatestVersion'
-          displayName: 'Added agent IP in storage account'    
+        # - task: AzurePowerShell@5
+        #   inputs:
+        #         azureSubscription: 'tfstatesc-prod'
+        #         ScriptType: 'InlineScript'
+        #         Inline: |
+        #           $ip = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
+        #           Write-Host "ip is : $ip"
+        #           Connect-AzAccount -Subscription '567-gevernovabuildtestsub'
+        #           Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -Name "tfstatestoracc" -IPAddressOrRange "$ip"
+        #           Start-Sleep -s 20
+        #         azurePowerShellVersion: 'LatestVersion'
+        #   displayName: 'Added agent IP in storage account'    
 
         - task: TerraformCLI@0
           displayName: 'Terraform Plan'
