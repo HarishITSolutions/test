@@ -83,14 +83,28 @@ stages:
 #            secureVarsFile: 'secret.tfvars'
             allowTelemetryCollection: true
 
-        - task: PowerShell@2
+        # - task: PowerShell@2
+        #   inputs:
+        #     targetType: 'inline'
+        #     script: |
+        #       $HostedIPAddress = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
+        #       Write-Host "ip is : $HostedIPAddress"
+        #       Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -AccountName "tfstatestoracc" -IPAddressOrRange "$HostedIPAddress"
+        #     runScriptInSeparateScope: true
+
+        - task: AzurePowerShell@5
           inputs:
-            targetType: 'inline'
-            script: |
-              $HostedIPAddress = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
-              Write-Host "ip is : $HostedIPAddress"
-              Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -AccountName "tfstatestoracc" -IPAddressOrRange "$HostedIPAddress"
-            runScriptInSeparateScope: true
+                azureSubscription: 'tfstatesc-prod'
+                ScriptType: 'InlineScript'
+                Inline: |
+                  $ip = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
+                  Write-Host "ip is : $ip"
+                  Connect-AzAccount -Subscription '567-gevernovabuildtestsub'
+                  Add-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -Name "tfstatestoracc" -IPAddressOrRange "$ip"
+                  Start-Sleep -s 20
+                azurePowerShellVersion: 'LatestVersion'
+          displayName: 'Added agent IP in storage account'    
+
         - task: TerraformCLI@0
           displayName: 'Terraform Plan'
           inputs:
@@ -123,3 +137,16 @@ stages:
             # commandOptions: '$(inputvariables)'
             allowTelemetryCollection: true
             publishPlanResults: 'plan.out' 
+
+        - task: AzurePowerShell@5
+          inputs:
+                azureSubscription: 'tfstatesc-prod'
+                ScriptType: 'InlineScript'
+                Inline: |
+                  $ip = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
+                  Write-Host "ip is : $ip"
+                  Connect-AzAccount -Subscription '567-gevernovabuildtestsub'
+                  Remove-AzStorageAccountNetworkRule -ResourceGroupName "Testresourcegroup1" -Name "tfstatestoracc" -IPAddressOrRange "$ip"
+                  Start-Sleep -s 20
+                azurePowerShellVersion: 'LatestVersion'
+          displayName: 'Removed agent IP in storage account'     
